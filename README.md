@@ -1,44 +1,69 @@
-# Templates Repository
+# Data Analysis Template Usage
 
-The Fred Hutch templates repository stores the minimum file requirements for several project types. Each project folder serves as a template and guide for following best coding practices. Please visit the [Scientific Computing Wiki](https://sciwiki.fredhutch.org/scicomputing/software_standards/) to review the coding standards at Fred Hutch.
+This template is built to accommodate a Python project used primarily for data analysis. While sharing results is encouraged, it is not anticipated that the underlying code will be packaged for re-use. This template is set up for when you need a single Jupyter notebook, or a single `.py` file to batch for your results. All additional files in the template represent the minimum requirements to keep in mind when developing or sharing any data analysis project.
 
-Supported project types are detailed in the following sections, and include both stand-alone data analysis and package/tool creation. The standards vary between the two projects, with greater organizational structure and testing requirements for tool development projects. Both project types require a license and README file, as well as a designated location for separate raw and processed data. Each project folder contains a README file detailing usage and all template components.
+To review the coding standards at Fred Hutch, please see the [Scientific Computing Wiki](https://sciwiki.fredhutch.org/scicomputing/software_standards/). By maintaining these standards across Fred Hutch, our work is reproducible and easier for other researchers to review and adapt to their own purposes. To browse the library of examples originating from this template (or submit your own code to be shared), see our linked [Data Analysis Examples Repository](https://github.com/FredHutch/wiki-code-examples/data-analysis).
 
-Currently, only Python templates are supported. However, a similar framework is anticipated for R development in the near future.
+With this template, you can choose between building your data analysis project in an interactive Jupyter notebook, or in a python script to be run on the command line. Details for both options are described below.
 
-#### Usage
+## Jupyter Notebook Project
 
-It is recommended to clone this repository to your local machine, then copy and rename the folder for the project type you wish to develop:
+You may want to build your entire data analysis project within a Jupyter notebook. In this case, you can find a template `ProjectName.ipynb` file in the root folder of this template directory. Please replace `ProjectName` with a name meaningful to your project. By saving your final notebooks in this location, anyone following up on your code can readily and unambiguously access the conclusions of your work. 
+
+Jupyter notebooks allow the flexibility to add interactive features, as well as mark-down text for documentation clarity. In a standalone notebook project, no further documentation is required in the directory if the workbook is well-documented. A well-documented notebook should include contextual information in markdown cells, and docstrings for all functions.
+
+When you run your Jupyter notebook, a `.ipynb_checkpoints\` directory will be created in the root folder. This directory stores information needed to run your Jupyter notebook. It should be left alone if you are developing an interactive notebook. 
+
+Here is an example of a data analysis project contained in a Jupyter notebook, developed from this template: [TODO: Standalone Notebook](https://github.com/FredHutch/wiki-code-examples).
+
+If you choose to work in an interactive notebook instead of the command line, then the `project_name.py` file is not needed. Deleting it will not affect the remainder of files in the template.
+
+## Command Line Project
+
+To run a Python module on the command line, you simply need to run Python with the path to the code you wish to run. In this case, you should write your code to the `project_name.py` file (after giving it a meaningful name).
+
+For example, using a python 3 environment from the project root directory in rhino, we can run the contents of a file `project_name.py` in the source code folder:
 ```
-local:~/$ git clone https://github.com/FredHutch/wiki-templates.git
-local:~/$ cp -r wiki-templates/ToolDev-Python-Template/ MyPythonProject/
+username@rhino2:~/DataAnalysis-Python-Template$ ml Python
+username@rhino2:~/DataAnalysis-Python-Template$ python project_name.py
+```
+Batching is simply automating what you would do on the command line. In general, the automation steps go in a `.bat` file. For computing at Fred Hutch, we refer to the description and instructions available on the [Scientific Computing Wiki](https://sciwiki.fredhutch.org/computing/cluster_usingSlurm/).
+
+Here is an example of a data analysis project contained in a python script, developed from this template: [TODO: commmand line data analysis project example](https://github.com/FredHutch/wiki-code-examples).
+
+Please note that if you do not wish to use a notebook interface, then the `ProjectName.ipynb` file can be deleted without affecting the remainder of the template.
+
+# File Structure
+
+The minimum file structure is diagrammed below, followed by further discussion of the usage of each item. (See above for discussion of `project_name.py` and `ProjectName.ipynb`).
+
+```
+DataAnalysis-Python-Template/
+  |- README.md
+  |- LICENSE
+  |- ProjectName.ipynb
+  |- project_name.py
+  |- data/
+      |- raw_data/
+      |- processed_data/
+  |- doc/
+      |- doc_instructions.md
 ```
 
-To manage version control of your project in git, create a local repository from your new project folder:
-```
-local:~/$ cd MyPythonProject
-local:~/$ git init
-local:~/$ git add *
-local:~/$ git commit -am "initial commit from template"
-```
-> Note: for more resources on using git, see the [Scientific Computing Wiki](https://sciwiki.fredhutch.org/scicomputing/software_managecode/).
+#### README
 
-#### Examples
+Every project should have a README file, that describes the contents of the project directory and the intended use of the code. This document can be plain text, although markdown is convenient for sharing links and formatting. The [Scientific Computing Wiki](https://sciwiki.fredhutch.org/compdemos/vscode_markdown_howto/) contains several resources for markdown tips as well as the VS Code editor.
 
-A growing repository of examples developed from these templates is available [here](https://github.com/FredHutch/wiki-code-examples/). Contributions to the examples repository are welcome and encouraged. We hope to develop a robust resource for researchers to see applications of existing packages, as well as share their own results and homegrown code across an open science framework for the Hutch. 
+#### License
 
-To keep the examples repo lightweight for easy cloning, we request that data not be stored directly in any project repo that is submitted. Please take a look at existing examples to figure out some options for accessing data in your project code.
+All shared code and anlaysis needs to be released under a license. The default template license is the MIT license, as it comes with very limited restrictions and is considered a good choice for open research and code sharing. For more information on the MIT license, see the [full text](https://opensource.org/licenses/MIT). 
 
-## Data Analysis Project ([+DataAnalysis-Python-Template](DataAnalysis-Python-Template/))
+To set a different license for your project, you will need to delete the MIT license and [replace it](https://help.github.com/en/articles/adding-a-license-to-a-repository) before publicly releasing your project.
 
-This project template is built to accommodate a Python project used primarily for data analysis. With this template, you can choose between building your data analysis project in an interactive Jupyter notebook, or in a python script to be run on the command line. All additional files in the template are documented in the local [README](DataAnalysis-Python-Template/README.md) file and represent the minimum requirements to keep in mind when developing or sharing any data analysis project.
+#### Data Storage ([+data/](data/))
 
-While sharing results is encouraged, it is not anticipated that the underlying code for this type of project will be packaged for re-use.
+Raw data should be kept separate from processed data, and code to process data should be located in either the source code directory or a jupyter notebook, depending on the project design. In practice, you might store the data directly in these folders, or instead you might document an external location where the data is stored. To keep the examples repository lightweight, we ask that data not be stored in the repository. 
 
-## Tool and Package Development ([+ToolDev-Python-Template](ToolDev-Python-Template/))
+#### Documentation ([+doc/](doc/))
 
-This project template is built to accommodate any Python project focused on tool or package development, which can ultimately be shared or imported by other users. The template file structure has the flexibility to support a notebook interface, an automated script, package creation, or some hybrid thereof. Some projects will require building out additional subfolders and modules, but the basic skeleton should be consistent across all projects at Fred Hutch. This will aid in reproducibility, and make it easier for other researches to review and adapt code to their own purposes. All template components are documented in the local [README](ToolDev-Python-Template/README.md) file.
-
-## Flask application template ([+Flask-Python-Template](Flask-Python-Template/))
-
-This project template is built for a simple flask web application that only consists of a few pages and relatively simple functionality.  More complex projects can likely use a very similar template but if you find yourself using thigns like blueprints, a complex service layer, AMQP, etc. then this is probably too simplistic of a template for you to use as-is.  All template components are documented in the local [README](Flask-Python-Template/README.md) file.
+This directory is a catch-all for any supporting work for your project. Depending on how you are sharing your code, you may want to build a brief tutorial or provide instruction in a README file. For code associated with research, background/source documents, papers, and presentations can all be included here.
